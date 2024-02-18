@@ -8,7 +8,14 @@ echo "<br>Processing Array:<br><pre>" . var_export($arr, true) . "</pre>";
 $total = 0.00;
 //note: use the $arr variable, don't directly touch $a1-$a4
 //TODO do adding here
+
+foreach ($arr as $value) {
+    $total += $value;
+}
+
 //TODO do rounding stuff here (round to two decimals i.e., 0.10, 0.01, 0.00)
+
+$total = round($total, 2);
 echo "The total is " . var_export($total, true);
 }
 echo "Problem 2: Adding Floats<br>";
