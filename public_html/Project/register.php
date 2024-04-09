@@ -63,20 +63,8 @@ if (
     $hasError = true;
 }
 if (!$hasError) {
-    //echo "Welcome, $email";
+    echo "Welcome, $email";
 //TODO4
-    $hash = password_hash($password, PASSWORD_BCRYPT);
-    $db = getDB();
-    $stmt = $db->prepare("INSERT INTO Users(email, password) VALUES (:email, :password)");
-    try {
-        $r = $stmt->execute([":email" => $email, ":password" => $hash]);
-        echo "Succesfully register!";
-    } catch(Exception $e) {
-        echo "There was an error registration <br>";
-        echo "<pre>" . var_export($e, true) . ",/pre>";
-    }
 }
-
 }
-
 ?>  
