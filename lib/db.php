@@ -21,3 +21,4 @@ function getDB() {
     return $db;
 }
 ?>
+
