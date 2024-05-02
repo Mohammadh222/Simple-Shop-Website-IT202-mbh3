@@ -20,6 +20,7 @@ if (isset($_POST["role_id"])) {
         }
     }
 }
+
 $query = "SELECT id, name, description, is_active from Roles";
 $params = null;
 if (isset($_POST["role"])) {

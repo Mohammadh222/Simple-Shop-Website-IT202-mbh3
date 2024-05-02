@@ -3,7 +3,7 @@
 }
 
 .alert-warning {
-    background-color: yellow;
+    background-color: rgb(255, 0, 43);
 }
 
 .alert-danger {
@@ -11,13 +11,17 @@
 }
 
 .alert-info {
-    background-color: teal;
+    background-color: rgb(25, 70, 70);
 }
-nav li{display: inline; background-color: rgb(235, 231, 238);}
-nav li a{color: rgb(26, 12, 184)}
-input{border-radius: 50%;}
+nav {
+    background-color: rgb(21, 121, 243);
+    padding: 5px 5px;
+}
+nav li{display: inline;}
+nav li a{color: rgb(13, 228, 41); margin-left: 10px;}
+input{border-radius: 10%}
 body{
-    background-color: rgb(4, 4, 146);
-    color: rgb(228, 229, 238);
+    background-color: rgb(63, 75, 129);
+    color: rgb(255, 255, 255);
 
 }

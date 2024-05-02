@@ -1,23 +1,43 @@
 <?php
 require_once(__DIR__ . "/../../partials/nav.php");
 ?>
-<form onsubmit="return validate(this)" method="POST">
-    <div>
-        <label for="email">Email/Username</label>
-        <input type="text" name="email" required />
-    </div>
-    <div>
-        <label for="pw">Password</label>
-        <input type="password" id="pw" name="password" required minlength="8" />
-    </div>
-    <input type="submit" value="Login" />
-</form>
+<div class="container-fluid">
+    <h1>Login</h1>
+    <form onsubmit="return validate(this)" method="POST">
+        <div class="mb-3">
+            <label class="form-label" for="email">Username/Email</label>
+            <input class="form-control" type="text" id="email" name="email" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="pw">Password</label>
+            <input class="form-control" type="password" id="pw" name="password" required minlength="8" />
+        </div>
+        <input type="submit" class="mt-3 btn btn-primary" value="Login" />
+    </form>
+</div>
 <script>
     function validate(form) {
         //TODO 1: implement JavaScript validation
         //ensure it returns false for an error and true for success
-
-        return true;
+        let isValid = true;
+        const email = form.email.value;
+        const password = form.password.value;
+        if (email.indexOf("@") > -1) {
+            if (!isValidEmail(email)) {
+                flash("Invalid email", "danger");
+                isValid = false;
+            }
+        } else {
+            if (!isValidUsername(email)) {
+                flash("Username must be lowercase, 3-16 characters, and contain only a-z, 0-9, _ or -", "danger");
+                isValid = false;
+            }
+        }
+        if (!isValidPassword(password)) {
+            flash("Password too short", "danger");
+            isValid = false;
+        }
+        return isValid;
     }
 </script>
 <?php
@@ -32,23 +52,10 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
         flash("Email must be provided <br>");
         $hasError = true;
     }
-    //sanitize
-    //$email = filter_var($email, FILTER_SANITIZE_EMAIL);
-   
-    //validate
-    /*if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        flash("Please enter a valid email <br>");
-        $hasError = true;
-    }*/
     if (str_contains($email, "@")) {
         //sanitize
-        //$email = filter_var($email, FILTER_SANITIZE_EMAIL);
         $email = sanitize_email($email);
         //validate
-        /*if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            flash("Invalid email address");
-            $hasError = true;
-        }*/
         if (!is_valid_email($email)) {
             flash("Invalid email address");
             $hasError = true;
@@ -70,9 +77,9 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
     if (!$hasError) {
         //TODO 4
         $db = getDB();
-        $stmt = $db->prepare("SELECT id, email, username, password from Users where email = :email or username = :email");
+       // $stmt = $db->prepare("SELECT id, email, username, password from Users where email = :email or username=:email");
         try {
-            $r = $stmt->execute([":email" => $email]);
+        //    $r = $stmt->execute([":email" => $email]);
             if ($r) {
                 $user = $stmt->fetch(PDO::FETCH_ASSOC);
                 if ($user) {
@@ -97,6 +104,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
                             $_SESSION["user"]["roles"] = []; //no roles
                         }
                         flash("Welcome, " . get_username());
+                       // get_or_create_account();
                         die(header("Location: home.php"));
                     } else {
                         flash("Invalid password");
@@ -111,4 +119,4 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
     }
 }
 ?>
-<?php require_once(__DIR__ . "/../../partials/flash.php");
+<?php require_once(__DIR__ . "/../../partials/footer.php");
