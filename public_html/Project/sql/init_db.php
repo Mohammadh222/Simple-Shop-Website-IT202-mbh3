@@ -9,15 +9,8 @@
 </details>
 <br><br>
 <?php
-# IMPORTANT: There should be no need to edit anything in this file
-# Simply drop new structural .sql files into this directory then access this file in the browser
-# It'll load all of the sql files and attempt to run them against the database
-# Make sure you prefix the file names with at least a left padded 3 digit incrementing number (i.e., 001, 002)
-# This ensures the files always run in the precise order required (order of execution is extremely important)
 
 
-
-#turn error reporting on
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -46,7 +39,6 @@ try {
         //connect to DB
         $db = getDB();
         /***
-         * Let's make this function a bit smarter to save DB calls for small dev plans (i.e., heroku)
          */
         $stmt = $db->prepare("show tables");
         $stmt->execute();
