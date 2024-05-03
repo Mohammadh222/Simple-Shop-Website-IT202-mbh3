@@ -51,9 +51,11 @@ foreach ($params as $key => $value) {
 $params = null; //set it to null to avoid issues
 
 
-//$stmt = $db->prepare("SELECT id, name, description, cost, stock, image FROM BGD_Items WHERE stock > 0 LIMIT 50");
+$stmt = $db->prepare("SELECT id, name, descriptiom, unit_price, stock FROM Product WHERE stock > 0 LIMIT 50");
 try {
-    $stmt->execute($params); //dynamically populated params to bind
+
+$stmt->execute(); 
+
     $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
     if ($r) {
         $results = $r;
@@ -174,8 +176,14 @@ try {
             <div class="input-group">
                 <input type="submit" class="btn btn-primary" value="Apply" />
             </div>
+
         </div>
     </form>
+
+    <img src="products.jpg" alt="product" width="300" height="200">
+    <img src="product2.jpg" alt="product" width="300" height="200">
+
+
     <div class="row row-cols-1 row-cols-md-5 g-4">
         <?php foreach ($results as $item) : ?>
             <div class="col">
