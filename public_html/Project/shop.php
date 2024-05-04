@@ -257,7 +257,7 @@ try {
                     <?php endif; ?>
 
                     <div class="card-body">
-                    <img src="product4.jpg" alt="product" width="300" height="200">
+                    <img src="product7.jpg" alt="product" width="300" height="200">
 
                         <h5 class="card-title">Name: <?php se($item, "name"); ?></h5>
                         <p class="card-text">Description: <?php se($item, "description"); ?></p>
@@ -295,7 +295,7 @@ try {
                     <?php endif; ?>
 
                     <div class="card-body">
-                    <img src="product3.jpg" alt="product" width="300" height="200">
+                    <img src="product4.jpg" alt="product" width="300" height="200">
 
                         <h5 class="card-title">Name: <?php se($item, "name"); ?></h5>
                         <p class="card-text">Description: <?php se($item, "description"); ?></p>
