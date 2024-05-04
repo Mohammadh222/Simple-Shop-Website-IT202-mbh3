@@ -19,6 +19,8 @@ $name = se($_GET, "name", "", false);
 //split query into data and total
 $base_query = "SELECT id, name, description, cost, stock, image FROM Products";
 $total_query = "SELECT count(1) as total FROM Products";
+
+
 //dynamic query
 $query = " WHERE 1=1"; //1=1 shortcut to conditionally build AND clauses
 $params = []; //define default params, add keys as needed and pass to execute
@@ -50,19 +52,19 @@ foreach ($params as $key => $value) {
 }
 $params = null; //set it to null to avoid issues
 
+    $stmt = $db->prepare("SELECT id, name, cost, description FROM Products WHERE stock > 0 LIMIT 50");
 
-$stmt = $db->prepare("SELECT id, name, descriptiom, unit_price, stock FROM Product WHERE stock > 0 LIMIT 50");
 try {
 
-$stmt->execute(); 
-
-    $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    if ($r) {
-        $results = $r;
+    $stmt->execute(); 
+    
+        $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($r) {
+            $results = $r;
+        }
+    } catch (PDOException $e) {
+        flash("<pre>" . var_export($e, true) . "</pre>");
     }
-} catch (PDOException $e) {
-    flash("<pre>" . var_export($e, true) . "</pre>");
-}
 ?>
 <script>
     function cart(item, cost) {
@@ -130,6 +132,23 @@ $stmt->execute();
         }
         //TODO create JS helper to update all show-balance elements
     }
+
+    
+
+    $stmt = $db->prepare("SELECT id, name, cost, description FROM Products2 WHERE stock > 0 LIMIT 50");
+
+try {
+
+    $stmt->execute(); 
+    
+        $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($r) {
+            $results = $r;
+        }
+    } catch (PDOException $e) {
+        flash("<pre>" . var_export($e, true) . "</pre>");
+    }
+
 </script>
 
 <div class="container-fluid">
@@ -182,6 +201,87 @@ $stmt->execute();
 
     <img src="products.jpg" alt="product" width="300" height="200">
     <img src="product2.jpg" alt="product" width="300" height="200">
+    <img src="product1.jpg" alt="product" width="300" height="200">
+    <img src="product3.jpg" alt="product" width="300" height="200">
+    <img src="product4.jpg" alt="product" width="300" height="200">
+    <img src="product5.jpg" alt="product" width="300" height="200">
+    <img src="product6.jpg" alt="product" width="300" height="200">
+    <img src="product7.jpg" alt="product" width="300" height="200">
+
+    <div class="row row-cols-1 row-cols-md-5 g-4">
+        <?php foreach ($results as $item) : ?>
+            <div class="col">
+                <div class="card bg-dark">
+                    <div class="card-header">
+                        
+                    </div>
+                    <?php if (se($item, "image", "", false)) : ?>
+                        <img src="<?php se($item, "image"); ?>" class="card-img-top" alt="...">
+                    <?php endif; ?>
+
+                    <div class="card-body">
+                    <img src="product2.jpg" alt="product" width="300" height="200">
+
+                        <h5 class="card-title">Name: <?php se($item, "name"); ?></h5>
+                        <p class="card-text">Description: <?php se($item, "description"); ?></p>
+                        <p  style="margin-bottom: 0px;"><u> </u><?php se($item, "average_rating"); ?></p>
+                    </div>
+                    <div class="card-footer">
+                        Cost: <?php se($item, "cost"); ?>
+                        <!-- Cart-->
+                        <button onclick="cart('<?php se($item, 'id'); ?>','<?php se($item, 'cost'); ?>')" class="btn btn-primary">Add to Cart</button>
+                        <?php if (has_role("Admin")) : ?> 
+                            <td>
+                                <a href="admin/edit_item.php?id=<?php se($item, "id"); ?>">Edit</a>
+                            </td>
+                            <?php endif; ?>
+                        <!-- example form submit-->
+                        <form action="product_details.php" method="PUT">
+                            <input type="hidden" name="id" value="<?php se($item, 'id'); ?>" />
+                            <button onclick="details('<?php se($item, 'id'); ?>','<?php se($item, 'cost'); ?>')" class="btn btn-primary">product details</Details></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <div class="row row-cols-1 row-cols-md-5 g-4">
+        <?php foreach ($results as $item) : ?>
+            <div class="col">
+                <div class="card bg-dark">
+                    <div class="card-header">
+                        
+                    </div>
+                    <?php if (se($item, "image", "", false)) : ?>
+                        <img src="<?php se($item, "image"); ?>" class="card-img-top" alt="...">
+                    <?php endif; ?>
+
+                    <div class="card-body">
+                    <img src="product4.jpg" alt="product" width="300" height="200">
+
+                        <h5 class="card-title">Name: <?php se($item, "name"); ?></h5>
+                        <p class="card-text">Description: <?php se($item, "description"); ?></p>
+                        <p  style="margin-bottom: 0px;"><u> </u><?php se($item, "average_rating"); ?></p>
+                    </div>
+                    <div class="card-footer">
+                        Cost: <?php se($item, "cost"); ?>
+                        <!-- Cart-->
+                        <button onclick="cart('<?php se($item, 'id'); ?>','<?php se($item, 'cost'); ?>')" class="btn btn-primary">Add to Cart</button>
+                        <?php if (has_role("Admin")) : ?> 
+                            <td>
+                                <a href="admin/edit_item.php?id=<?php se($item, "id"); ?>">Edit</a>
+                            </td>
+                            <?php endif; ?>
+                        <!-- example form submit-->
+                        <form action="product_details.php" method="PUT">
+                            <input type="hidden" name="id" value="<?php se($item, 'id'); ?>" />
+                            <button onclick="details('<?php se($item, 'id'); ?>','<?php se($item, 'cost'); ?>')" class="btn btn-primary">product details</Details></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
 
 
     <div class="row row-cols-1 row-cols-md-5 g-4">
@@ -189,13 +289,14 @@ $stmt->execute();
             <div class="col">
                 <div class="card bg-dark">
                     <div class="card-header">
-                        Placeholder
                     </div>
                     <?php if (se($item, "image", "", false)) : ?>
                         <img src="<?php se($item, "image"); ?>" class="card-img-top" alt="...">
                     <?php endif; ?>
 
                     <div class="card-body">
+                    <img src="product3.jpg" alt="product" width="300" height="200">
+
                         <h5 class="card-title">Name: <?php se($item, "name"); ?></h5>
                         <p class="card-text">Description: <?php se($item, "description"); ?></p>
                         <p  style="margin-bottom: 0px;"><u> </u><?php se($item, "average_rating"); ?></p>
