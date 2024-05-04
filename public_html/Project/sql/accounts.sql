@@ -1,13 +1,10 @@
-CREATE TABLE IF NOT EXISTS RM_Scores(
+CREATE TABLE IF NOT EXISTS BGD_Accounts(
     id int AUTO_INCREMENT PRIMARY KEY,
-    score int DEFAULT 0,
-    level int DEFAULT 0,
-    rescued int DEFAULT 0,
+    account varchar(12) unique,
     user_id int,
+    balance int DEFAULT 0,
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES Users(id),
-    check (score > 0),
-    check (level > 0),
-    check (rescued >= 0)
+    check (balance >= 0 AND LENGTH(account) = 12)
 )

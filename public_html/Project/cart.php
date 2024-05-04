@@ -18,7 +18,7 @@ $user_id = get_user_id();
 $db = getDB();
 $stmt = $db->prepare("SELECT product_id, name, /*user_id,*/ desired_quantity, unit_cost FROM Cart JOIN Products on Cart.product_id = Products.id WHERE user_id = :uid");
 try {
-    $stmt->execute([":uid" => $user_id]);
+    $stmt->execute(["mbh3:uid" => $user_id]);
     $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
     if ($r) {
         $results = $r;
